@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>手機維修店</h2>
+    <div class="card">
+      <div class="addr">地址: <span></span></div>
+      <div class="tel">電話: <span></span></div>
+      <div class="open">開放時間: <span></span></div>
+    </div>
+    <script>
+      let address = "台北市南京東路三段 100 號";
+      let tel = "(02) 23457643";
+      let open = "週一至週五 10:00-20:00";
+
+      document.querySelector(".addr span").innerText = address;
+      document.querySelector(".tel span").innerText = tel;
+      document.querySelector(".open span").innerText = open;
+    </script>
+  </body>
+</html>
