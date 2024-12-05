@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add to Cart</title>
+    <!-- <link rel="stylesheet" href="./Add2Cart01.css" /> -->
+  </head>
+
+  <body>
+    <header>
+      <div id="cart">cart(<span id="cartQty">0</span>)</div>
+    </header>
+    <div class="container" id="container"></div>
+    <template id="productTemplate">
+      <div id="productRow">
+        <h4 id="productName">Printer</h4>
+        <div id="price">NT$ 3,500</div>
+        <div id="qtyWrapper">
+          <button id="btnDecrement">-</button>
+          <input type="text" id="qty" value="1" readonly />
+          <button id="btnIncrement">+</button>
+        </div>
+        <div>
+          <button id="add2Cart">Add to Cart</button>
+        </div>
+      </div>
+    </template>
+    <script src="JS/Add2Cart01.js"></script>
+  </body>
+</html>
