@@ -16,39 +16,47 @@
       </div>
     </template>
     <script>
-      let store1 = {
-        name: "台北店",
-        address: "台北市南京東路三段 100 號",
-        tel: "(02) 23457643",
-        open: "週一至週五 10:00-20:00",
-      };
-      let store2 = {
-        name: "台中店",
-        address: "台中市中正路 100號",
-        tel: "(04) 12345678",
-        open: "週一至週五 10:00-20:00",
-      };
-      let store3 = {
-        name: "台南店",
-        address: "台南市中山路 50號",
-        tel: "(06) 24569876",
-        open: "週一至週五 10:00-20:00",
-      };
-
-      let stores = [store1, store2, store3];
+      let json = `{
+  "stores": [
+    {
+      "name": "台北店",
+      "address": "台北市南京東路三段 100 號",
+      "tel": "(02) 23457643",
+      "open": "週一至週五 10:00-20:00"
+    },
+    {
+      "name": "台中店",
+      "address": "台中市中正路 100號",
+      "tel": "(04) 12345678",
+      "open": "週一至週五 10:00-20:00"
+    },
+    {
+      "name": "台南店",
+      "address": "台南市中山路 50號",
+      "tel": "(06) 24569876",
+      "open": "週一至週五 10:00-20:00"
+    }
+  ]
+}`;
+      // 將 json 字串轉成一個物件
+      let storesObject = JSON.parse(json);
+      // 從這物件取得 stores屬性, 它是一個陣列
+      let stores = storesObject.stores;
       function generateStore(store) {
-        let cardTemplate = document.getElementById("cardTemplate");
-        let card = cardTemplate.content.cloneNode(true);
-
-        card.querySelector("h2").innerText = store.name;
-        card.querySelector(".addr span").innerText = store.address;
-        card.querySelector(".tel span").innerText = store.tel;
-        card.querySelector(".open span").innerText = store.open;
-
+        // 取得 template,將它複製一份, 並將內容填入, 最後加入到 container
+        let cardTemplate = document.getElementById("cardTemplate"); // 取得 template
+        let card = cardTemplate.content.cloneNode(true); // 複製一份
+        // 將 store 的資料填入
+        card.querySelector("h2").textContent = store.name;
+        card.querySelector(".addr span").textContent = store.address;
+        card.querySelector(".tel span").textContent = store.tel;
+        card.querySelector(".open span").textContent = store.open;
         return card;
       }
       for (let i = 0; i < stores.length; i++) {
+        let store = stores[i];
         let card = generateStore(stores[i]);
+        // 將 card 加入到 container
         document.querySelector(".container").appendChild(card);
       }
     </script>
