@@ -44,6 +44,7 @@
       總和1:<span id="spanTotal1">0</span><br />
       總和2:<span id="spanTotal2">0</span>
     </form>
+    <script src="JS/globalFunctions.js"></script>
     <script>
       let btnCalcTotal = document.getElementById("btnCalcTotal");
 
@@ -69,20 +70,6 @@
         spanTotal1.innerHTML = "<span class=span1>" + total + "</span>";
         spanTotal2.innerText = total;
       });
-      function tryParseFloat(str) {
-        let result = {
-          isValid: false,
-          value: 0,
-        };
-
-        let num = Number(str);
-
-        if (isNaN(str) == false) {
-          result.isValid = true;
-          result.value = num;
-        }
-        return result;
-      }
     </script>
   </body>
 </html>
