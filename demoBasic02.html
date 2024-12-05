@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>計算兩個 textbox 值的和, 並呈現在 span 中</title>
+
+    <style>
+      body {
+        font-family: "微軟正黑體";
+      }
+
+      input {
+        margin: 5px;
+        padding: 5px;
+      }
+
+      #btnCalcTotal {
+        background-color: #4caf50;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+
+        color: white;
+        padding: 10px 20px;
+      }
+
+      .span1 {
+        color: red;
+        font-weight: 900;
+        font-size: 2em;
+        padding: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>計算兩個 textbox 值的和, 並呈現在 span 中</h1>
+    <form action="" autocomplete="off">
+      Number 1:<input type="text" id="number1" /><br />
+      Number 2:<input type="text" id="number2" /><br />
+
+      <input type="button" id="btnCalcTotal" value="計算總和" /><br />
+      總和1:<span id="spanTotal1">0</span><br />
+      總和2:<span id="spanTotal2">0</span>
+    </form>
+    <script>
+      let btnCalcTotal = document.getElementById("btnCalcTotal");
+
+      btnCalcTotal.addEventListener("click", function () {
+        let number1 = document.getElementById("number1");
+        let number2 = document.getElementById("number2");
+
+        let spanTotal1 = document.getElementById("spanTotal1");
+        let spanTotal2 = document.getElementById("spanTotal2");
+
+        let result1 = tryParseFloat(number1.value);
+        let result2 = tryParseFloat(number2.value);
+
+        if (result1.isValid == false || result2.isValid == false) {
+          spanTotal1.innerHTML = "0";
+          spanTotal2.innerHTML = "0";
+
+          alert("請輸入數字");
+          return;
+        }
+        let total = result1.value + result2.value;
+
+        spanTotal1.innerHTML = "<span class=span1>" + total + "</span>";
+        spanTotal2.innerText = total;
+      });
+      function tryParseFloat(str) {
+        let result = {
+          isValid: false,
+          value: 0,
+        };
+
+        let num = Number(str);
+
+        if (isNaN(str) == false) {
+          result.isValid = true;
+          result.value = num;
+        }
+        return result;
+      }
+    </script>
+  </body>
+</html>
