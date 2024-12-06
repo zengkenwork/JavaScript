@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="JS/globalFunctions.js"></script>
+    <script>
+      let value = "123.5";
+      let num = stringHelper.tryParseFloat(value);
+      console.log(num);
+      value = "123.abc";
+      num = stringHelper.tryParseFloat(value);
+      console.log(num);
+      value = "abc";
+      num = stringHelper.tryParseFloat(value);
+      console.log(num);
+      value = "123";
+      num = stringHelper.tryParseInt(value);
+      console.log(num);
+      value = "123.5";
+      num = stringHelper.tryParseInt(value);
+      console.log(num);
+    </script>
+  </body>
+</html>
