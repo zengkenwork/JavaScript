@@ -17,6 +17,10 @@ function Cart() {
     return this.items.map((x) => x.getSubTotal()).reduce((a, b) => a + b, 0);
   };
   this.addItem = (product, qty) => {
+    product = product || -1;
+    if (product === -1) {
+      console.log("product是null 或 undefine");
+    }
     qty = parseInt(qty) || 1;
     if (qty < 1) qty = 1;
 
@@ -68,33 +72,33 @@ function initCard(card, product) {
 }
 function btnIncrement_click(e) {
   let btn = e.target;
-  let qtyElement = btn.closest("#qtyWrapper").querySelector("#qty");
+  let qtyElement = btn.closest("#qtyWrapper").querySelector(".qty");
   qtyElement.value = parseInt(qtyElement.value) + 1;
 }
 function btnDecrement_click(e) {
   let btn = e.target;
-  let qtyElement = btn.closest("#qtyWrapper").querySelector("#qty");
+  let qtyElement = btn.closest("#qtyWrapper").querySelector(".qty");
   const currentQty = parseInt(qtyElement.value);
   qtyElement.value = currentQty <= 1 ? 1 : currentQty - 1;
 }
 function addToCart_click(e) {
   let btn = e.target;
   let productId = btn.getAttribute("data-productId");
-  let qty = btn.closest("#productRow").querySelector("#qty").value;
+  let qty = btn.closest("#productRow").querySelector(".qty").value;
 
   let product = products.find((x) => x.id == productId);
   myCart.addItem(product, qty);
-  console.log("MyCart", myCart);
+  document.getElementById("cartQty").innerText = myCart.count();
 }
 
-let printer = new Product(1, "Hp 雷射印表機", 3500);
-let nb = new Product(2, "Asus i7 15吋筆電", 45000);
+// let printer = new Product(1, "Hp 雷射印表機", 3500);
+// let nb = new Product(2, "Asus i7 15吋筆電", 45000);
 
-let cart = new Cart();
+// let cart = new Cart();
 
-cart.addItem(printer, 1);
-cart.addItem(nb, 2);
-cart.addItem(printer, 3);
+// cart.addItem(printer, 1);
+// cart.addItem(nb, 2);
+// cart.addItem(printer, 3);
 
 // console.log("cart info", cart);
 // console.log("cart.count", cart.count(), "總金額", cart.getTotal());
