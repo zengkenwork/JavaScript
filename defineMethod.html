@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>讓多個物件共用Method</h1>
+    <script>
+      let funcGetFullName = function () {
+        return this.firstName + " " + this.lastName;
+      };
+
+      var allen = {
+        firstName: "Allen",
+        lastName: "Kuo",
+      };
+      allen.getFullName = funcGetFullName;
+      var ken = {
+        firstName: "Ken",
+        lastName: "Zeng",
+      };
+      ken.getFullName = funcGetFullName;
+      let members = [allen, ken];
+
+      for (var i = 0; i < members.length; i++) {
+        console.log(members[i].getFullName());
+      }
+    </script>
+  </body>
+</html>
