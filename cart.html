@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h2>請選擇要加入購物車的商品</h2>
+        <select id="productId"></select>
+        <input type="button" id="btnAddToCart" value="加入購物車" />
+        <input type="button" id="btnAddToCartFirst" value="在最前面加入商品" />
+      </div>
+      <hr />
+      <div>
+        <h3>其他操作</h3>
+        <input type="button" id="btnEmptyCart" value="清空購物車" />
+        <input type="button" id="btnDelToCartFirst" value="移除最前面的商品" />
+        <input type="button" id="btnDelToCart" value="移除最後面的商品" />
+      </div>
+      <div>
+        <h4>目前購物車裡的便宜商品: <span id="cheapestProductName"></span></h4>
+        <h4>
+          目前購物車裡小計最低的商品: <span id="minSubTotalProductName"></span>
+        </h4>
+      </div>
+      <h1>購物車</h1>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>商品名稱</th>
+            <th>價格</th>
+            <th>數量</th>
+            <th>小計</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="cart">
+          <!-- 購物車內容 -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">總計</td>
+            <td id="total"></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <script>
+      let cart = []; // 購物車
+
+      document
+        .getElementById("btnAddToCart")
+        .addEventListener("click", addToCart);
+      document
+        .getElementById("btnAddToCartFirst")
+        .addEventListener("click", insertToCart);
+      document
+        .getElementById("btnDelToCartFirst")
+        .addEventListener("click", removeFirstCartItem);
+      document
+        .getElementById("btnDelToCart")
+        .addEventListener("click", removeLastCartItem);
+      document
+        .getElementById("btnEmptyCart")
+        .addEventListener("click", emptyCart);
+
+      function Product(id, name, price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+      }
+      function addToCart() {
+        let productId = document.getElementById("productId").value;
+        let product = products.find((x) => x.id == productId);
+        let item = cart.find((item) => item.product.id == productId);
+        if (item) {
+          item.quantity += 1;
+        } else {
+          item = {
+            product: product,
+            quantity: 1,
+          };
+          cart.push(item);
+        }
+        renderCart();
+      }
+      function insertToCart() {
+        let productId = document.getElementById("productId").value;
+        let product = products.find((x) => x.id == productId);
+        let item = cart.find((item) => item.product.id == productId);
+        if (item) {
+          item.quantity += 1;
+        } else {
+          item = {
+            product: product,
+            quantity: 1,
+          };
+          cart.unshift(item);
+        }
+        renderCart();
+      }
+      function renderCart() {
+        let cartContainer = document.getElementById("cart");
+        cartContainer.innerHTML = "";
+
+        for (let item of cart) {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${item.product.name}</td>
+            <td>${item.product.price}</td>
+            <td>${item.quantity}</td>
+            <td>${item.product.price * item.quantity}</td>
+            <td><input type = button value = "Delete" onclick="removeFromCart(${
+              item.product.id
+            })"></td>`;
+
+          cartContainer.appendChild(tr);
+        }
+        // 總合
+        let total = cart.reduce(
+          (sum, item) => sum + item.product.price * item.quantity,
+          0
+        );
+        document.getElementById("total").textContent = total;
+        // 最便宜的商品
+        let cheapestProduct = cart.reduce((cheapest, next) => {
+          if (cheapest == null || next.product.price < cheapest.product.price) {
+            return next;
+          } else {
+            return cheapest;
+          }
+        }, null);
+        document.getElementById("cheapestProductName").textContent =
+          cheapestProduct ? cheapestProduct.product.name : "";
+        // 小計最低的商品
+        let minSubTotalProduct = cart.reduce((min, next) => {
+          let subTotal = next.product.price * next.quantity;
+          if (min == null || subTotal < min.subTotal) {
+            return {
+              product: next.product,
+              subTotal: subTotal,
+            };
+          } else {
+            return min;
+          }
+        }, null);
+        document.getElementById("minSubTotalProductName").textContent =
+          minSubTotalProduct ? minSubTotalProduct.product.name : "";
+      }
+      function removeFromCart(productId) {
+        let index = cart.findIndex((item) => item.product.id == productId);
+        cart.splice(index, 1);
+        renderCart();
+      }
+      function emptyCart() {
+        cart.splice(0, cart.length);
+        renderCart();
+      }
+      function removeFirstCartItem() {
+        cart.shift();
+        renderCart();
+      }
+      function removeLastCartItem() {
+        cart.pop();
+        renderCart();
+      }
+      // 初始化所有商品
+      let products = [
+        new Product(1, "Apple", 20),
+        new Product(2, "Banana", 10),
+        new Product(3, "Orange", 15),
+        new Product(4, "Pineapple", 25),
+        new Product(5, "Watermelon", 30),
+      ];
+      // 初始化下拉清單
+      for (let product of products) {
+        let option = document.createElement("option");
+        option.value = product.id;
+        option.text = `${product.name} - ${product.price}`;
+
+        document.getElementById("productId").appendChild(option);
+      }
+    </script>
+  </body>
+</html>
